@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+  <div id="app">
+    <counter ref="one" @change="handleChange"></counter>
+    <counter ref="two" @change="handleChange"></counter>
+    <div>{{total}}</div>
+  </div>
+  <script>
+    Vue.component('counter',{
+      template: `<div @click="handleClick">{{count}}</div>`,
+      data() {
+        return {
+          count: 0
+        }
+      },
+      methods: {
+        handleClick() {
+          this.count++
+          this.$emit('change')
+        } 
+      }
+    })
+    const app = new Vue({
+      el: '#app',
+      data: {
+        total: 0
+      },
+      methods: {
+        handleChange() {
+          // console.log(this.$refs.one.count)
+          this.total = this.$refs.one.count + this.$refs.two.count
+          alert('click')
+        }
+      },
+      // computed: {
+      //   total() {
+      //     console.log(this.$refs.one)
+      //   }
+      // },
+      watch: {
+        total() {
+          console.log(this.$refs.one)
+        }
+      } 
+    })
+  </script>
+</body>
+</html>
